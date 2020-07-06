@@ -87,6 +87,92 @@ In this tutorial, you will deploy a streaming data lake architecture that collec
 
 4. You should now be able to use SQL to query the table (S3 data)
 
+Examples:
+
+----
+
+        -- total number of comments
+
+        select count(*)
+        from reddit_comments;
+
+
+        -- general sentiment of reddit on a day
+
+        select round(avg(sentiment_score), 4) as avg_sentiment
+        from reddit_comments
+        where comment_date
+        like '%2020-07-06%';
+
+
+        -- total comments collected per subreddits
+
+        select count(*) as num_comments, subreddit
+        from reddit_comments
+        group by subreddit
+        order by num_comments DESC;
+
+
+        -- average sentiment per subreddits
+
+        select round(avg(sentiment_score), 4) as avg_sentiment_score, subreddit
+        from reddit_comments
+        group by subreddit
+        order by avg_sentiment_score DESC;
+
+
+        -- list all Subreddits
+
+        select distinct(subreddit)
+        from reddit_comments;
+
+
+        -- top 10 most positive comments by subreddit
+
+        select subreddit, comment_text
+        from reddit_comments
+        where subreddit = 'aww'
+        order by sentiment_score DESC
+        limit 10;
+
+
+        -- most active subreddits and their sentiment
+
+        select subreddit, count(*) as num_comments, round(avg(sentiment_score), 4) as avg_sentiment_score
+        from reddit_comments
+        group by subreddit
+        order by num_comments DESC;
+
+
+        -- search term frequency by subreddit where comments greater than 5
+
+        select subreddit, count(*) as comment_occurrences
+        from reddit_comments
+        where LOWER(comment_text) like '%hey%'
+        group by subreddit
+        having count(*) > 5
+        order by comment_occurrences desc;
+
+
+        -- search term sentiment by subreddit
+
+        select subreddit, round(avg(sentiment_score), 4) as avg_sentiment_score
+        from reddit_comments
+        where LOWER(comment_text) like '%puppy%'
+        group by subreddit
+        having count(*) > 5
+        order by avg_sentiment_score desc;
+
+
+        -- top 25 most positive comments about a search term
+
+        select subreddit, author, comment_text, sentiment_score
+        from reddit_comments
+        where LOWER(comment_text) like '%puppy%'
+        order by sentiment_score desc
+        limit 25;
+
+----
 
 ### Further Learning / References: Athena and Glue
 
