@@ -81,103 +81,12 @@ In this tutorial, you will deploy a streaming data lake architecture that collec
 
 1. Open the [Amazon Athena console](https://console.aws.amazon.com/athena/) or select Athena in the Services dropdown
 
-2. Choose the glue database (reddit_glue_db) populated on the left view
+2. Choose the glue database (reddit_db) populated on the left view
 
-3. Select the table (raw_reddit_comments) to view the table schema
+3. Select the table (reddit_comments) to view the table schema
 
 4. You should now be able to use SQL to query the table (S3 data)
 
-    Here are some example queries to begin exploring the data streaming into S3:
-
-        -- total number of comments
-
-        select count(*)
-        from raw_reddit_comments;
-
-
-        -- general sentiment of reddit Today
-
-        select round(avg(comment_tb_sentiment), 4) as avg_comment_tb_sentiment
-        from raw_reddit_comments
-        where comment_date
-        like '%2019-08-22%';
-
-
-        -- total comments collected per subreddits
-
-        select count(*) as num_comments, subreddit
-        from raw_reddit_comments
-        group by subreddit
-        order by num_comments DESC;
-
-
-        -- average sentiment per subreddits
-
-        select round(avg(comment_tb_sentiment), 4) as avg_comment_tb_sentiment, subreddit
-        from raw_reddit_comments
-        group by subreddit
-        order by avg_comment_tb_sentiment DESC;
-
-
-        -- list all Subreddits
-
-        select distinct(subreddit)
-        from raw_reddit_comments;
-
-
-        -- top 10 most positive comments by subreddit
-
-        select subreddit, comment_body
-        from raw_reddit_comments
-        where subreddit = '${subreddit}'
-        order by comment_tb_sentiment DESC
-        limit 10;
-
-
-        -- most active subreddits and their sentiment
-
-        select subreddit, count(*) as num_comments, round(avg(comment_tb_sentiment), 4) as avg_comment_tb_sentiment
-        from raw_reddit_comments
-        group by subreddit
-        order by num_comments DESC;
-
-
-        -- search term frequency by subreddit where comments greater than 5
-
-        select subreddit, count(*) as comment_occurrences
-        from raw_reddit_comments
-        where LOWER(comment_body) like '%puppy%'
-        group by subreddit
-        having count(*) > 5
-        order by comment_occurrences desc;
-
-
-        -- search term sentiment by subreddit
-
-        select subreddit, round(avg(comment_tb_sentiment), 4) as avg_comment_tb_sentiment
-        from raw_reddit_comments
-        where LOWER(comment_body) like '%puppy%'
-        group by subreddit
-        having count(*) > 5
-        order by avg_comment_tb_sentiment desc;
-
-
-        -- top 25 most positive comments about a search term
-
-        select subreddit, author_name, comment_body, comment_tb_sentiment
-        from raw_reddit_comments
-        where LOWER(comment_body) like '%puppy%'
-        order by comment_tb_sentiment desc
-        limit 25;
-
-
-        -- total sentiment for search term
-
-        SELECT round(avg(comment_tb_sentiment), 4) as avg_comment_tb_sentiment
-        FROM (
-        SELECT subreddit, author_name, comment_body, comment_tb_sentiment
-        FROM raw_reddit_comments
-        WHERE LOWER(comment_body) LIKE '%puppy%')
 
 ### Further Learning / References: Athena and Glue
 
