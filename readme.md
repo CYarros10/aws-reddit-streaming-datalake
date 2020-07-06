@@ -1,13 +1,46 @@
 # Reddit Streaming Data Lake
 
-## 1. Overview
+## Overview
 
 AWS provides several key services for an easy way to quickly deploy and manage data streaming in the cloud.  Reddit is a popular social news aggregation, web content rating, and discussion website.  At peak times, Reddit can see over 300,000 comments and 35,000 submissions an hour.  The Reddit API offers developers a simple way to collect all of this data. AWS offers Amazon S3 to store data, Amazon Kinesis Firehose to stream data, AWS Glue to catalog data, and Amazon Athena to analyze data.
 
 In this tutorial, you will deploy a streaming data lake architecture that collects and stores reddit comments in near realtime.  This data can be analyzed using Amazon Athena.
 
+### Example Reddit Comment
 
-## 1. Create your Reddit bot account
+        {
+            "comment_id": "fx3wgci",
+            "subreddit": "Fitness",
+            "author": "silverbird666",
+            "comment_text": "well, i dont exactly count my calories, but i run on a competitive base and do kickboxing, that stuff burns quite much calories. i just stick to my established diet, and supplement with protein bars and shakes whenever i fail to hit my daily intake of protein. works for me.",
+            "distinguished": null,
+            "submitter": false,
+            "total_words": 50,
+            "reading_ease_score": 71.44,
+            "reading_ease": "standard",
+            "reading_grade_level": "7th and 8th grade",
+            "sentiment_score": -0.17,
+            "censored": 0,
+            "comment_language": "en",
+            "positive": 0,
+            "neutral": 1,
+            "negative": 0,
+            "subjectivity_score": 0.35,
+            "subjective": 0,
+            "url": "https://reddit.com/r/Fitness/comments/hlk84h/victory_sunday/fx3wgci/",
+            "comment_date": "2020-07-06 15:41:15",
+            "comment_timestamp": "2020/07/06 15:41:15",
+            "comment_hour": 15,
+            "comment_year": 2020,
+            "comment_month": 7,
+            "comment_day": 6
+        }
+
+----
+
+## Tutorial
+
+### 1. Create your Reddit bot account
 
 1. [Register a reddit account](https://www.reddit.com/register/)
 
@@ -30,12 +63,13 @@ In this tutorial, you will deploy a streaming data lake architecture that collec
 
 9. Keep track of your Reddit account username, password, app client_id (in blue box), and app secret (in red box). These will be used in tutorial Step 11
 
-### Further Learning / References: PRAW
+#### Further Learning / References: PRAW
 
 * [PRAW Quick start](https://praw.readthedocs.io/en/latest/getting_started/quick_start.html)
 
+----
 
-## 2. Create a Key Pair for your streaming server
+### 2. Create a Key Pair for your streaming server
 
 1. Open the [Amazon EC2 console](https://console.aws.amazon.com/ec2/) or select EC2 under Services dropdown
 
@@ -51,11 +85,13 @@ In this tutorial, you will deploy a streaming data lake architecture that collec
 
     Important: This is the only chance for you to save the private key file. You'll need to provide the name of your key pair when you launch an instance and the corresponding private key each time you connect to the instance
 
-### Further Learning / References: EC2 Key Pairs
+#### Further Learning / References: EC2 Key Pairs
 
 * [User Guide: EC2 Key Pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
 
-## 3. Deploy streaming datalake infrastructure in CloudFormation
+----
+
+### 3. Deploy streaming datalake infrastructure in CloudFormation
 
 1. Open the [AWS CloudFormation console](https://console.aws.amazon.com/cloudformation) or select CloudFormation under the Services dropdown
 
@@ -73,11 +109,11 @@ In this tutorial, you will deploy a streaming data lake architecture that collec
 
 ----
 
-## -- Wait 10 minutes --
+### 4. Wait 10 minutes ...
 
 ----
 
-## 7. Use Athena to develop insights
+### 5. Use Athena to develop insights
 
 1. Open the [Amazon Athena console](https://console.aws.amazon.com/athena/) or select Athena in the Services dropdown
 
@@ -88,8 +124,6 @@ In this tutorial, you will deploy a streaming data lake architecture that collec
 4. You should now be able to use SQL to query the table (S3 data)
 
 Examples:
-
-----
 
         -- total number of comments
 
@@ -172,19 +206,17 @@ Examples:
         order by sentiment_score desc
         limit 25;
 
-----
-
-### Further Learning / References: Athena and Glue
+#### Further Learning / References: Athena and Glue
 
 * [Using Glue and Athena](https://docs.aws.amazon.com/athena/latest/ug/glue-athena.html)
 
-### Next Steps: Terminate Services (if you're done)
+#### Next Steps: Terminate Services (if you're done)
 
 * Hopefully by now you have found some interesting insights into Reddit and the overall public sentiment.  Athena is a great service for ad-hoc queries like this.  You are approaching the end of this tutorial, so you will start terminating services and instances to prevent further billing.
 
 ----
 
-## 8. Clean up the environment
+### Clean up the environment
 
 # Do not skip this step! Leaving AWS resources without tearing down can result a bill in the end of the month. Make sure you follow the steps to remove the resources you’ve created
 
@@ -198,5 +230,3 @@ Examples:
     * Open the [Amazon EC2 console](https://console.aws.amazon.com/ec2/) or select EC2 under Services dropdown
     * In the navigation pane, under NETWORK & SECURITY, choose Key Pairs
     * Click on the key pair name you’ve created and hit Delete on top
-
-----
