@@ -36,7 +36,11 @@ Put this all together and you can deploy a streaming data lake architecture that
             "comment_day": 6
         }
 
+The Python application can be viewed here: https://github.com/CYarros10/reddit-streaming-application
+
 ----
+
+
 
 ## Tutorial
 
