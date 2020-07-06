@@ -2,11 +2,11 @@
 
 ## Overview
 
-AWS provides several key services for an easy way to quickly deploy and manage data streaming in the cloud.  Reddit is a popular social news aggregation, web content rating, and discussion website.  At peak times, Reddit can see over 300,000 comments and 35,000 submissions an hour.  The Reddit API offers developers a simple way to collect all of this data. AWS offers Amazon S3 to store data, Amazon Kinesis Firehose to stream data, AWS Glue to catalog data, and Amazon Athena to analyze data.
+AWS provides several key services for an easy way to quickly deploy and manage data streaming in the cloud.  Reddit is a popular social news aggregation, web content rating, and discussion website.  At peak times, Reddit can see over 300,000 comments and 35,000 submissions an hour.  The Reddit API offers developers a simple way to collect all of this data. AWS offers Amazon S3 to store data, Amazon Kinesis Firehose to stream data, AWS Glue to catalog data, and Amazon Athena to analyze data. TextBlob is a Python (2 and 3) library for processing textual data. It provides a simple API for diving into common natural language processing (NLP) tasks such as part-of-speech tagging, noun phrase extraction, sentiment analysis, classification, translation, and more.
 
-In this tutorial, you will deploy a streaming data lake architecture that collects and stores reddit comments in near realtime.  This data can be analyzed using Amazon Athena.
+Put this all together and you can deploy a streaming data lake architecture that collects, analyzes, and stores reddit comments in near realtime. Finally, the data can be queried via Amazon Athena.
 
-### Example Reddit Comment
+### Example of a Collected+Analyzed Reddit Comment:
 
         {
             "comment_id": "fx3wgci",
